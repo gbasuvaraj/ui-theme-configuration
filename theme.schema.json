@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "schemaVersion": "0.1.0",
+    "name": "UI Theme Configuration",
+    "description": "Schema driving a GUI config editor. Each field maps to a CSS custom property. The UI generator reads sections → groups → fields to build the form."
+  },
+
+  "fieldTypes": {
+    "color":       { "input": "color-picker",  "description": "Hex / rgba color value" },
+    "font-family": { "input": "select", "description": "CSS font-family stack", "options": ["Inter, sans-serif", "system-ui, sans-serif", "Roboto, sans-serif", "'Open Sans', sans-serif", "Lato, sans-serif", "Poppins, sans-serif", "Montserrat, sans-serif", "Nunito, sans-serif", "ui-monospace, monospace", "'JetBrains Mono', monospace", "'Fira Code', monospace"] },
+    "font-size":   { "input": "text",           "description": "CSS size with unit, e.g. '1.5rem' or '24px'" },
+    "font-weight": { "input": "select",         "description": "CSS font-weight", "options": ["100","200","300","400","500","600","700","800","900"] },
+    "text":        { "input": "text",           "description": "Plain string value" },
+    "boolean":     { "input": "toggle",         "description": "True / false toggle" },
+    "url":         { "input": "text",           "description": "URL string" }
+  },
+
+  "sections": [
+
+    {
+      "id": "colors",
+      "label": "Colors",
+      "description": "Define named colors. Each becomes a CSS variable (--color-name) you can reference in other fields.",
+      "groups": [
+        {
+          "id": "color-palette",
+          "label": "Palette",
+          "type": "list",
+          "allowAdd": true,
+          "cssVarPrefix": "--color-",
+          "itemSchema": {
+            "fields": [
+              { "id": "name",  "label": "Name",  "type": "text",  "default": "primary" },
+              { "id": "value", "label": "Color", "type": "color", "default": "#000000" }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "navigation",
+      "label": "Navigation",
+      "description": "Navbar chrome and individual nav item states",
+      "groups": [
+
+        {
+          "id": "navbar",
+          "label": "Navbar",
+          "description": "Container-level styles (the full-width bar)",
+          "fields": [
+            { "id": "bg",           "label": "Background",    "cssVar": "--nav-bg",           "type": "color", "default": "#1a1a2e" },
+            { "id": "border-color", "label": "Border Color",  "cssVar": "--nav-border-color", "type": "color", "default": "#2d2d44" }
+          ]
+        },
+
+        {
+          "id": "nav-item",
+          "label": "Nav Item States",
+          "description": "Shared CSS variables consumed by every nav item",
+          "fields": [
+            { "id": "color",        "label": "Text Color",          "cssVar": "--nav-item-color",        "type": "color", "default": "#e0e0e0" },
+            { "id": "bg",           "label": "Background",          "cssVar": "--nav-item-bg",           "type": "color", "default": "transparent" },
+            { "id": "hover-color",  "label": "Hover Text Color",    "cssVar": "--nav-item-hover-color",  "type": "color", "default": "#ffffff" },
+            { "id": "hover-bg",     "label": "Hover Background",    "cssVar": "--nav-item-hover-bg",     "type": "color", "default": "#2d2d44" },
+            { "id": "active-color", "label": "Active Text Color",   "cssVar": "--nav-item-active-color", "type": "color", "default": "#6c63ff" },
+            { "id": "active-bg",    "label": "Active Background",   "cssVar": "--nav-item-active-bg",    "type": "color", "default": "#2d2d44" }
+          ]
+        },
+
+        {
+          "id": "nav-items-list",
+          "label": "Nav Items",
+          "description": "Enable, rename, reorder or add nav items",
+          "type": "preset-list",
+          "allowAdd": true,
+          "itemSchema": {
+            "fields": [
+              { "id": "label",    "label": "Label",      "type": "text",    "default": "Item" },
+              { "id": "url",      "label": "URL",        "type": "url",     "default": "/" },
+              { "id": "display",  "label": "Visible",    "type": "boolean", "default": true },
+              { "id": "showIcon", "label": "Show Icon",  "type": "boolean", "default": false },
+              { "id": "imageUrl", "label": "Image URL",  "type": "url",     "optional": true }
+            ]
+          },
+          "defaultItems": [
+            { "label": "Home",     "url": "/",        "display": true,  "showIcon": false, "imageUrl": "" },
+            { "label": "About",    "url": "/about",   "display": true,  "showIcon": false, "imageUrl": "" },
+            { "label": "Services", "url": "/services","display": true,  "showIcon": false, "imageUrl": "" },
+            { "label": "Blog",     "url": "/blog",    "display": false, "showIcon": false, "imageUrl": "" },
+            { "label": "Contact",  "url": "/contact", "display": true,  "showIcon": false, "imageUrl": "" }
+          ]
+        }
+
+      ]
+    },
+
+    {
+      "id": "typography",
+      "label": "Typography",
+      "description": "Global font family plus per-element overrides",
+      "groups": [
+
+        {
+          "id": "global",
+          "label": "Global",
+          "fields": [
+            { "id": "font-family", "label": "Font Family", "cssVar": "--font-family", "type": "font-family", "default": "Inter, sans-serif" }
+          ]
+        },
+
+        {
+          "id": "h1",
+          "label": "Heading 1",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h1-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h1-font-size",    "type": "font-size",   "default": "2.5rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h1-font-weight",  "type": "font-weight", "default": "700" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h1-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h1-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "h2",
+          "label": "Heading 2",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h2-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h2-font-size",    "type": "font-size",   "default": "2rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h2-font-weight",  "type": "font-weight", "default": "700" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h2-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h2-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "h3",
+          "label": "Heading 3",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h3-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h3-font-size",    "type": "font-size",   "default": "1.75rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h3-font-weight",  "type": "font-weight", "default": "600" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h3-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h3-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "h4",
+          "label": "Heading 4",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h4-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h4-font-size",    "type": "font-size",   "default": "1.5rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h4-font-weight",  "type": "font-weight", "default": "600" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h4-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h4-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "h5",
+          "label": "Heading 5",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h5-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h5-font-size",    "type": "font-size",   "default": "1.25rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h5-font-weight",  "type": "font-weight", "default": "600" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h5-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h5-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "h6",
+          "label": "Heading 6",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-h6-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-h6-font-size",    "type": "font-size",   "default": "1rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-h6-font-weight",  "type": "font-weight", "default": "600" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-h6-color",        "type": "color",       "default": "#1a1a2e" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-h6-hover-color",  "type": "color",       "optional": true }
+          ]
+        },
+
+        {
+          "id": "body",
+          "label": "Body Text",
+          "fields": [
+            { "id": "font-family",  "label": "Font Family",  "cssVar": "--text-body-font-family",  "type": "font-family", "optional": true, "inherits": "--font-family" },
+            { "id": "font-size",    "label": "Font Size",    "cssVar": "--text-body-font-size",    "type": "font-size",   "default": "1rem" },
+            { "id": "font-weight",  "label": "Font Weight",  "cssVar": "--text-body-font-weight",  "type": "font-weight", "default": "400" },
+            { "id": "color",        "label": "Text Color",   "cssVar": "--text-body-color",        "type": "color",       "default": "#333333" },
+            { "id": "hover-color",  "label": "Hover Color",  "cssVar": "--text-body-hover-color",  "type": "color",       "optional": true }
+          ]
+        }
+
+      ]
+    },
+
+    {
+      "id": "buttons",
+      "label": "Buttons",
+      "description": "Per-variant button token sets",
+      "groups": [
+
+        {
+          "id": "primary",
+          "label": "Primary",
+          "fields": [
+            { "id": "bg",         "label": "Background",        "cssVar": "--btn-primary-bg",         "type": "color", "default": "#6c63ff" },
+            { "id": "color",      "label": "Text Color",        "cssVar": "--btn-primary-color",      "type": "color", "default": "#ffffff" },
+            { "id": "border",     "label": "Border Color",      "cssVar": "--btn-primary-border",     "type": "color", "default": "transparent" },
+            { "id": "hover-bg",   "label": "Hover Background",  "cssVar": "--btn-primary-hover-bg",   "type": "color", "default": "#5a52d5" },
+            { "id": "hover-color","label": "Hover Text",        "cssVar": "--btn-primary-hover-color","type": "color", "default": "#ffffff" },
+            { "id": "active-bg",  "label": "Active Background", "cssVar": "--btn-primary-active-bg",  "type": "color", "default": "#4a43c0" },
+            { "id": "focus-ring", "label": "Focus Ring",        "cssVar": "--btn-primary-focus-ring", "type": "color", "default": "#6c63ff80" }
+          ]
+        },
+
+        {
+          "id": "secondary",
+          "label": "Secondary",
+          "fields": [
+            { "id": "bg",         "label": "Background",        "cssVar": "--btn-secondary-bg",         "type": "color", "default": "transparent" },
+            { "id": "color",      "label": "Text Color",        "cssVar": "--btn-secondary-color",      "type": "color", "default": "#6c63ff" },
+            { "id": "border",     "label": "Border Color",      "cssVar": "--btn-secondary-border",     "type": "color", "default": "#6c63ff" },
+            { "id": "hover-bg",   "label": "Hover Background",  "cssVar": "--btn-secondary-hover-bg",   "type": "color", "default": "#6c63ff1a" },
+            { "id": "hover-color","label": "Hover Text",        "cssVar": "--btn-secondary-hover-color","type": "color", "default": "#5a52d5" },
+            { "id": "active-bg",  "label": "Active Background", "cssVar": "--btn-secondary-active-bg",  "type": "color", "default": "#6c63ff33" },
+            { "id": "focus-ring", "label": "Focus Ring",        "cssVar": "--btn-secondary-focus-ring", "type": "color", "default": "#6c63ff80" }
+          ]
+        },
+
+        {
+          "id": "disabled",
+          "label": "Disabled",
+          "description": "Applied to any button in the disabled state via [disabled] or .disabled",
+          "fields": [
+            { "id": "bg",     "label": "Background", "cssVar": "--btn-disabled-bg",     "type": "color", "default": "#e0e0e0" },
+            { "id": "color",  "label": "Text Color", "cssVar": "--btn-disabled-color",  "type": "color", "default": "#9e9e9e" },
+            { "id": "border", "label": "Border",     "cssVar": "--btn-disabled-border", "type": "color", "default": "transparent" }
+          ]
+        }
+
+      ]
+    }
+
+  ]
+}
