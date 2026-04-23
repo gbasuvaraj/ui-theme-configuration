@@ -25,6 +25,7 @@ export interface Group {
   type?: 'list' | 'preset-list';
   allowAdd?: boolean;
   cssVarPrefix?: string;
+  chartType?: 'pie' | 'line' | 'column';
   fields?: Field[];
   itemSchema?: ListItemSchema;
   defaultItems?: ListItem[];

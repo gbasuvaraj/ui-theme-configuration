@@ -146,6 +146,68 @@
   margin: 0 0 4px;
 }
 
+/* ============================================================
+   CHART GROUP
+   ============================================================ */
+
+.chart-group-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-metrics {
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-metric-row {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.chart-metric-row:last-child {
+  border-bottom: none;
+}
+
+.chart-metric-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.chart-metric-name {
+  font-size: 12px;
+  color: var(--text-h);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-metric-color {
+  width: 280px;
+}
+
+.chart-metric-color .palette-select-btn {
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+.chart-preview {
+  padding: 8px;
+  min-width: 0;
+}
+
+/* ============================================================
+   PALETTE STRIP
+   ============================================================ */
+
 .palette-strip {
   display: flex;
   align-items: center;
@@ -347,8 +409,7 @@
 
 .palette-select {
   position: relative;
-  flex: 1;
-  min-width: 0;
+  width: 200px;
 }
 
 .palette-select-btn {

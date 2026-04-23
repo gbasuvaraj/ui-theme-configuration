@@ -39,6 +39,80 @@
     },
 
     {
+      "id": "charts",
+      "label": "Charts",
+      "description": "Assign palette colors to each metric in your charts. Drag colors from the strip above.",
+      "groups": [
+        {
+          "id": "chart-pie",
+          "label": "Revenue Breakdown",
+          "chartType": "pie",
+          "itemSchema": { "fields": [
+            { "id": "name", "label": "Metric", "type": "text", "default": "Item" },
+            { "id": "color", "label": "Color", "type": "color", "default": "" }
+          ]},
+          "defaultItems": [
+            { "name": "Product Revenue", "color": "" },
+            { "name": "Service Revenue", "color": "" },
+            { "name": "Operating Cost",  "color": "" },
+            { "name": "Gross Profit",    "color": "" },
+            { "name": "Net Profit",      "color": "" }
+          ]
+        },
+        {
+          "id": "chart-cashflow",
+          "label": "Cashflow Chart",
+          "chartType": "line",
+          "itemSchema": { "fields": [
+            { "id": "name", "label": "Metric", "type": "text", "default": "Item" },
+            { "id": "color", "label": "Color", "type": "color", "default": "" }
+          ]},
+          "defaultItems": [
+            { "name": "Operating Cash",  "color": "" },
+            { "name": "Investing Cash",  "color": "" },
+            { "name": "Financing Cash",  "color": "" },
+            { "name": "Net Change",      "color": "" },
+            { "name": "Free Cash Flow",  "color": "" },
+            { "name": "Opening Balance", "color": "" },
+            { "name": "Closing Balance", "color": "" }
+          ]
+        },
+        {
+          "id": "chart-bar",
+          "label": "Quarterly Sales",
+          "chartType": "column",
+          "itemSchema": { "fields": [
+            { "id": "name", "label": "Metric", "type": "text", "default": "Item" },
+            { "id": "color", "label": "Color", "type": "color", "default": "" }
+          ]},
+          "defaultItems": [
+            { "name": "North Region", "color": "" },
+            { "name": "South Region", "color": "" },
+            { "name": "East Region",  "color": "" },
+            { "name": "West Region",  "color": "" }
+          ]
+        },
+        {
+          "id": "chart-kpi",
+          "label": "KPI Trends",
+          "chartType": "line",
+          "itemSchema": { "fields": [
+            { "id": "name", "label": "Metric", "type": "text", "default": "Item" },
+            { "id": "color", "label": "Color", "type": "color", "default": "" }
+          ]},
+          "defaultItems": [
+            { "name": "Revenue",        "color": "" },
+            { "name": "Expenses",       "color": "" },
+            { "name": "EBITDA",         "color": "" },
+            { "name": "Customer Count", "color": "" },
+            { "name": "MRR",            "color": "" },
+            { "name": "Churn Rate",     "color": "" }
+          ]
+        }
+      ]
+    },
+
+    {
       "id": "navigation",
       "label": "Navigation",
       "description": "Navbar chrome and individual nav item states",

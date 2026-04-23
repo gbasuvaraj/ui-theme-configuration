@@ -1,5 +1,6 @@
 import type { Group, ListItem } from '../types';
 import { useTheme } from '../context/ThemeContext';
+import { ChartGroupEditor } from './ChartGroupEditor';
 
 const DEMO_COLORS: ListItem[] = [
   { name: 'primary',   value: '#6366f1' },
@@ -31,6 +32,8 @@ function GroupHeader({ label, description }: { label: string; description?: stri
 export function GroupEditor({ group }: { group: Group }) {
   const { schema, listValues, handleListChange } = useTheme();
   console.log(`[GroupEditor] id="${group.id}" label="${group.label}" type=${group.type ?? 'fields'} fields=${group.fields?.length ?? 0}`);
+
+  if (group.chartType) return <ChartGroupEditor group={group} />;
 
   if (group.type === 'preset-list') {
     const items = listValues[group.id] ?? group.defaultItems ?? [];
